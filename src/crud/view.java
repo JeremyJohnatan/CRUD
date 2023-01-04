@@ -23,43 +23,15 @@ public class view extends javax.swing.JFrame {
      */
     public view() {
         initComponents();
-        table();
-    }
-     void cari(){
-          DefaultTableModel tbl= new DefaultTableModel();
         tbl = new DefaultTableModel();
-        tbl.getDataVector().removeAllElements();
-        tbl.fireTableDataChanged();
-            
+        this.jTable.setModel(tbl);
         tbl.addColumn("id");
         tbl.addColumn("No Handphone");
         tbl.addColumn("Nama");
         tbl.addColumn("Berat Laundry (kg)");
         tbl.addColumn("type");
-         try {
-             String sql = "SELECT * FROM tb_pesananlaundry WHERE nama like '%" + tcari.getText() + "%'";
-             Connection con = (Connection) koneksi.getConnection();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql);
-             
-              while(rs.next()){
-           
-            tbl.addRow(new Object[]{
-            rs.getString("id"),
-            rs.getString("no_handphone"),
-            rs.getString("nama"),
-            rs.getString("berat_laundry"),
-            rs.getString("type")
-             }
-            );
-            jTable.setModel(tbl);           
-        }
-         } catch (Exception e) {
-         }
-     }
-//    public void hapus()(
-//            
-//    )
+        table();
+    }
     
     public void reset(){
         this.tnohp.setText("");
@@ -87,16 +59,11 @@ public class view extends javax.swing.JFrame {
     }
 
     public void table (){
-        DefaultTableModel tbl= new DefaultTableModel();
-        tbl = new DefaultTableModel();
+        
         tbl.getDataVector().removeAllElements();
         tbl.fireTableDataChanged();
             
-        tbl.addColumn("id");
-        tbl.addColumn("No Handphone");
-        tbl.addColumn("Nama");
-        tbl.addColumn("Berat Laundry (kg)");
-        tbl.addColumn("type");
+        
         
         try {
             Statement st = (Statement)koneksi.getConnection().createStatement();
@@ -120,6 +87,42 @@ public class view extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Koneksi Database Gagal" + e.getMessage());
         }
     }
+    
+    void cari(){
+//        DefaultTableModel tbl= new DefaultTableModel();
+//        tbl = new DefaultTableModel();
+        tbl.getDataVector().removeAllElements();
+        tbl.fireTableDataChanged();
+            
+//        tbl.addColumn("id");
+//        tbl.addColumn("No Handphone");
+//        tbl.addColumn("Nama");
+//        tbl.addColumn("Berat Laundry (kg)");
+//        tbl.addColumn("type");
+         try {
+             String sql = "SELECT * FROM tb_pesananlaundry WHERE nama like '%" + tcari.getText() + "%'";
+             Connection con = (Connection) koneksi.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql);
+             
+            while(rs.next()){
+                tbl.addRow(new Object[]{
+                rs.getString("id"),
+                rs.getString("no_handphone"),
+                rs.getString("nama"),
+                rs.getString("berat_laundry"),
+                rs.getString("type")
+                 }
+                );
+//                jTable.setModel(tbl);           
+            }
+              
+              st.close();
+              rs.close();
+         } catch (Exception e) {
+         }
+     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
